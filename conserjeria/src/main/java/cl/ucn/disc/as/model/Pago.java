@@ -1,34 +1,27 @@
 package cl.ucn.disc.as.model;
 
 import io.ebean.annotation.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
 
-import javax.persistence.Entity;
 import java.time.Instant;
 
-@ToString
-@AllArgsConstructor
-@Builder
-@Entity
-public class Pago {
+public class Pago extends BaseModel{
 
-    @Getter
     @NotNull
     private Instant pago;
 
-    @Getter
     @NotNull
     private Integer monto;
 
-    public static class PagoBuilder{
-        public Pago build(){
-            return new Pago(
-                    this.pago,
-                    this.monto
-            );
-        }
+    public Pago(Instant pago, Integer monto) {
+        this.pago = pago;
+        this.monto = monto;
+    }
+
+    public Instant getPago() {
+        return pago;
+    }
+
+    public Integer getMonto() {
+        return monto;
     }
 }
