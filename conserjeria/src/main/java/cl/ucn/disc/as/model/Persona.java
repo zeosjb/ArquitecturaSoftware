@@ -9,6 +9,7 @@ import cl.ucn.disc.as.utils.ValidationUtils;
 import io.ebean.annotation.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.ToString;
 
 import javax.persistence.Entity;
@@ -18,6 +19,7 @@ import javax.persistence.Entity;
  *
  * @author Diego Urrutia-Astorga.
  */
+@Getter
 @ToString(callSuper = true)
 @AllArgsConstructor
 @Builder
@@ -54,38 +56,39 @@ public class Persona extends BaseModel {
     @NotNull
     private String telefono;
 
-    /**
-     *
-     * Custom builder to validate
-     */
-    public static class PersonaBuilder{
-        /**
-         * @return the Persona
-         */
-        public Persona build(){
-
-            //validate the rut
-            if (!ValidationUtils.isRutValid(this.rut)) {
-                throw new IllegalDomainException(
-                        "RUT no valido: " + this.rut
-                );
-            }
-
-            //validate the email
-            if(!ValidationUtils.isEmailValid(this.email)){
-                throw new IllegalDomainException(
-                        "Email no valido: " + this.email
-                );
-            }
-
-            return  new Persona(
-                    this.rut,
-                    this.nombre,
-                    this.apellidos,
-                    this.email,
-                    this.telefono
-            );
-        }
+    public String getRut() {
+        return rut;
     }
 
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setRut(String rut) {
+        this.rut = rut;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
 }

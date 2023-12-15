@@ -7,18 +7,18 @@ import java.time.Instant;
 public class Pago extends BaseModel{
 
     @NotNull
-    private Instant pago;
+    private Instant fechaPago;
 
     @NotNull
     private Integer monto;
 
-    public Pago(Instant pago, Integer monto) {
-        this.pago = pago;
+    public Pago(Instant fechaPago, Integer monto) {
+        this.fechaPago = fechaPago;
         this.monto = monto;
     }
 
     public Instant getPago() {
-        return pago;
+        return fechaPago;
     }
 
     public Integer getMonto() {

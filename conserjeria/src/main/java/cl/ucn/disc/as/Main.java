@@ -1,11 +1,14 @@
 package cl.ucn.disc.as;
 
-import cl.ucn.disc.as.model.Edificio;
-import cl.ucn.disc.as.model.Persona;
-import cl.ucn.disc.as.services.Sistema;
-import cl.ucn.disc.as.services.SistemaImpl;
-import io.ebean.DB;
+import cl.ucn.disc.as.ui.ApiRestServer;
+import cl.ucn.disc.as.ui.WebController;
 import lombok.extern.slf4j.Slf4j;
+import io.javalin.Javalin;
+import cl.ucn.disc.as.grpc.PersonaGrpcServiceImpl;
+import io.grpc.Server;
+import io.grpc.ServerBuilder;
+
+import java.io.IOException;
 
 @Slf4j
 public final class Main {
@@ -14,35 +17,29 @@ public final class Main {
      *
      * @param args to use.
      * */
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException, InterruptedException {
 
         log.debug("Starting the main ..");
 
-        Database db = DB.getDefault();
+        log.debug("Library path : {}", System.getProperty("java.library.path"));
 
-        Sistema sistema = new SistemaImpl(db);
 
-        Edificio edificio = Edificio.builder()
-                .nombre("Y1")
-                .direccion("Angamos #0610 (al lado de la virgencita)")
+        //Start the API Rest Server
+        Javalin app = ApiRestServer.start(7070,new WebController());
+
+        log.debug("Starting Grpc server");
+        Server server = ServerBuilder
+                .forPort(50123)
+                .addService(new PersonaGrpcServiceImpl())
                 .build();
-        log.debug("Edificio before db: {}", edificio);
+        server.start();
 
-        edificio = sistema.add(edificio);
-        log.debug("Edificio after db: {}", edificio);
+        Runtime.getRuntime().addShutdownHook(new Thread(server::shutdown));
+        server.awaitTermination();
+        log.debug("Sistema deteniendose...");
 
-        Persona persona = Persona.builder()
-                .rut(999999)
-                .nombre("Diego")
-                .apellidos("Urrutia Astorga")
-                .email("durrutia@ucn.cl")
-                .telefono("+5622355166")
-                .build();
+        app.stop();
 
-        db.save(persona);
-
-        log.debug("The Persona before db: ${}", persona);
-
-        log.debug("Done. :)");
+        log.debug("Sistema finalizado...");
     }
 }
