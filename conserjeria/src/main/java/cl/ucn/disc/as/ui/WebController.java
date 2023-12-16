@@ -20,6 +20,7 @@ public final class WebController implements RoutesConfigurator{
 
     public WebController() {
         this.sistema = new SistemaImpl(DB.getDefault());
+        this.sistema.populate();
     }
 
     @Override
