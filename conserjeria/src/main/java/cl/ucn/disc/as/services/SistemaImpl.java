@@ -38,9 +38,9 @@ public class SistemaImpl implements Sistema{
 
 
     /**
-     * {@inheritDoc}
-     * @param edificio
      *
+     * @param edificio que se agrega
+     * @return El edificio que se agrega
      */
     @Override
     public Edificio add( Edificio edificio){
@@ -53,6 +53,11 @@ public class SistemaImpl implements Sistema{
         }
     }
 
+    /**
+     *
+     * @param persona que se agrega
+     * @return la persona agregada
+     */
     @Override
     public Persona add(Persona persona){
         try {
@@ -64,6 +69,11 @@ public class SistemaImpl implements Sistema{
         }
     }
 
+    /**
+     *
+     * @param departamento que se agrega
+     * @return departamento agregado
+     */
     @Override
     public Departamento add(Departamento departamento){
         try{
@@ -75,6 +85,13 @@ public class SistemaImpl implements Sistema{
         }
     }
 
+    /**
+     *
+     * @param duenio La persona quien se "arrienda" el departamento
+     * @param departamento Departamento que es arrendado
+     * @param fechaPago La fecha de pago del contrato de arriendo
+     * @return El contrato.
+     */
     @Override
     public Contrato realizarContrato(Persona duenio, Departamento departamento, Instant fechaPago) {
         try {
@@ -110,6 +127,9 @@ public class SistemaImpl implements Sistema{
         return Optional.ofNullable(persona);
     }
 
+    /**
+     * Utilizacion de Java Faker
+     */
     @Override
     public  void populate(){
         {

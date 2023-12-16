@@ -13,10 +13,12 @@ import java.io.IOException;
 @Slf4j
 public final class Main {
     /**
-     *  The Main.
+     * The main
      *
-     * @param args to use.
-     * */
+     * @param args
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public static void main(String[] args) throws IOException, InterruptedException {
 
         log.debug("Starting the main ..");

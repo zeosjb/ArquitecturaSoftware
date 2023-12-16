@@ -13,9 +13,9 @@ ebean:
 # database configuration
 datasource:
   db:
-    username: conserjeria
-    password: 79z#5RX&qq5z
-    platform: sqlite # h2, postgres, mysql, oracle, sqlserver
+    username: root
+    password: 20260521
+    platform: mariadb # sqlite, h2, postgres, mysql, oracle, sqlserver
     ddlMode: dropCreate # none | dropCreate | migrations
     dbName: conserjeria
-    url: jdbc:sqlite:conserjeria.db
+    url: jdbc:mariadb://localhost:3306/conserjeria

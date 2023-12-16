@@ -8,6 +8,12 @@ import java.util.Optional;
 
 @Slf4j
 public final class PersonaGrpcServiceImpl extends PersonaGrpcServiceGrpc.PersonaGrpcServiceImplBase {
+    /**
+     *
+     *
+     * @param request
+     * @param responseObserver
+     */
     @Override
     public void retrieve(PersonaGrpcRequest request, StreamObserver<PersonaGrpcResponse> responseObserver) {
         log.debug("Retrieving Persona with RUT: {}", request.getRut());
