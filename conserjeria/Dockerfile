@@ -1,14 +1,9 @@
-FROM gradle:8.3.0-jdk17 AS build
-COPY --chown=gradle:gradle . /home/gradle/src
-WORKDIR /home/gradle/src
-RUN gradle build --no-daemon
 
-FROM adoptopenjdk/openjdk17:alpine-slim
+FROM gradle:8.2-jdk17 AS build
+WORKDIR /usr/app
+COPY . .
+RUN gradle shadowJar --no-daemon
 
-EXPOSE 8080
-
-RUN mkdir /app
-
-COPY --from=build /home/gradle/src/build/libs/*.jar /app/javalin-application.jar
-
-ENTRYPOINT ["java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app/javalin-application.jar"]
+FROM openjdk:17-jdk
+COPY --from=build /usr/app/build/libs/*.jar /app.jar
+CMD ["java", "-jar", "/app.jar"]
